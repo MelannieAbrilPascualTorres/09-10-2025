@@ -13,15 +13,15 @@
             <div class="container mt-4">
 
                 {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                        {% for category, message in messages %}
-                            <div class="alert alert-{{ 'danger' if category == 'error' else 'danger' }} alerts-dismissible fade show"
-                                role="alert">
-                                {{ message }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ 'danger' if category == 'error' else 'danger' }} alerts-dismissible fade show"
+                    role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+                {% endif %}
                 {% endwith%}
             </div>
 
@@ -43,21 +43,10 @@
                 </section>
 
                 <section class="row">
-                    <p>Fecha de nacimiento</p>
-                    <div class=" col-4 mb-3">
-                        <label for="dia" class="form-label">Dia </label>
-                        <input type="number" required class="form-control" id="dia" name="dia" placeholder="Dia" min="1"
-                            max="31" value="{{ request.form.get('dia', '')}}">
-                    </div>
-                    <div class=" col-4 mb-3">
-                        <label for="mes" class="form-label">Mes </label>
-                        <input type="number" required class="form-control" id="mes" name="mes" placeholder="Mes" min="1"
-                            max="12" value="{{ request.form.get('mes', '')}}">
-                    </div>
-                    <div class=" col-4 mb-3">
-                        <label for="año" class="form-label">Año </label>
-                        <input type="number" required class="form-control" id="año" name="año" placeholder="Año"
-                            min="1900" max="2025" value="{{ request.form.get('año', '')}}">
+                    <div class=" col-12 mb-3">
+                        <label for="fecha" class="form-label">Fecha de nacimiento </label>
+                        <input type="date" required class="form-control" id="fecha" name="fecha" min="1925-01-01" max="2025-12-31"
+                            value="{{ request.form.get('fecha', '')}}">
                     </div>
                 </section>
 
@@ -81,9 +70,9 @@
                     </div>
                     <div class="form-check col-4 mb-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" required name="genero" id="personalizado">
-                            <label class="form-check-label" for="personalizado">
-                                Personalizado
+                            <input class="form-check-input" type="radio" required name="genero" id="otro">
+                            <label class="form-check-label" for="otro">
+                                Otro
                             </label>
                         </div>
                     </div>
@@ -91,12 +80,11 @@
 
                 <section class="row">
                     <div class="col-12 mb-3">
-                        <label for="cuenta" class="form-label">Número de celular o correo electrónico </label>
-                        <input type="text" required minlength="5" maxlength="100"
+                        <label for="cuenta" class="form-label">Correo electrónico.</label>
+                        <input type="email" required minlength="5" maxlength="100"
                             value="{{ request.form.get('cuenta', '')}}" class="form-control" name="cuenta" id="cuenta"
-                            placeholder="Número de celular o correo electrónico"
-                            pattern="^([0-9]{10,15}|[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,})$"
-                            title="Ingresa un número de telefono o un correo válido.">
+                            placeholder="Ingrese un correo electrónico"
+                            pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$">
                     </div>
                 </section>
 
@@ -104,16 +92,16 @@
                     <div class="col-12 mb-3">
                         <label for="contra" class="form-label">Contraseña </label>
                         <input type="password" required minlength="8" maxlength="50"
-                            value="{{ request.form.get('contra', '')}}" class="form-control" name="contra" id="contra"
-                            placeholder="Contraseña nueva" 
-                            title="Debe contener al menos un número, una mayúscula y una caracter especial.">
+                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,50}" value="{{ request.form.get('contra', '')}}"
+                            class="form-control" name="contra" id="contra" placeholder="Contraseña nueva"
+                            title="Debe contener al menos un número, una mayúscula, una minúscula y una caracter especial.">
+                        <div id="passwordHelp" class="form-text">Minimo 8 caracteres</div>
                     </div>
 
                     <div class="col-12 mb-3">
                         <label for="confirmar" class="form-label">Confirmar contraseña </label>
-                        <input type="password" required minlength="8" maxlength="50"
-                            value="{{ request.form.get('confirmar', '')}}" class="form-control" name="confirmar"
-                            id="confirmar" placeholder="Confirmar contraseña">
+                        <input type="password" required value="{{ request.form.get('confirmar', '')}}"
+                            class="form-control" name="confirmar" id="confirmar" placeholder="Confirmar contraseña">
                     </div>
                 </section>
 

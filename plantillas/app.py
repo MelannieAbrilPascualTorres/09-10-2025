@@ -34,15 +34,13 @@ def registrando():
 @app.route('/registrame', methods = ("GET", "POST"))
 def registrame():
     if request.method == "POST":
-        nombre = request.form["nombre"]
-        apellido = request.form["apellido"]
-        dia = request.form["dia"]
-        mes = request.form["mes"]
-        año = request.form["año"]
-        genero = request.form["genero"]
-        cuenta = request.form["cuenta"]
-        contra = request.form["contra"]
-        confirmar = request.form["confirmar"]
+        nombre = request.form['nombre']
+        apellido = request.form['apellido']
+        fecha = request.form['fecha']
+        genero = request.form['genero']
+        cuenta = request.form['cuenta']
+        contra = request.form['contra']
+        confirmar = request.form['confirmar']
 
         error = None
         if contra != confirmar:
@@ -53,8 +51,8 @@ def registrame():
             return render_template('registro.html')
         else:
             flash(f"¡Registro exitoso para el usuario: {nombre} {apellido}!")
-            return render_template('registro.html')
-        
+            return render_template('index.html')
+    
 
 @app.route('/sesion')
 def iniciar_sesion():
