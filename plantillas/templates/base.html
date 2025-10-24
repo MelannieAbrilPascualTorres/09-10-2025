@@ -40,7 +40,10 @@
                                 <a class="nav-link" href="/registro">Registrarse</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/sesion">Iniciar sesion</a>
+                                <a class="nav-link" href="/sesion">{% if session.get("nombre")==None %} Iniciar session 
+                                    {% else %} Cerrar session {%endif%}
+                                </a>
+                                                                                    
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/acerca">Acerca de</a>
