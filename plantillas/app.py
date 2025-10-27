@@ -85,10 +85,12 @@ def validaSesion():
                 session['usuario_email'] = email
                 session['usuario_nombre'] = usuario['nombre']
                 flash(f'Bienvenido {usuario["nombre"]}!', 'success')
-                return redirect(url_for('/'))
+                return redirect(url_for('index'))
             else:
-                flash('Contraseña incorrecta o usuario no encontrado', 'error')
-
+                flash('Contraseña incorrecta', 'error')
+        else:
+            flash('Usuario no encontrado', 'error')
+        
     return render_template('sesion.html')
 
 @app.route('/profile')
