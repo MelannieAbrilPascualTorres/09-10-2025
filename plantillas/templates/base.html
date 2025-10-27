@@ -49,8 +49,10 @@
                                 <a class="nav-link" href="/registro">Registrarse</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/sesion">{% if session.get("nombre")==None %} Iniciar sesión
-                                                                    {% else %} Cerrar sesión
+                                <a class="nav-link" href="/sesion">{% if not session.get('logueado') == True %} 
+                                                                               Iniciar sesión
+                                                                    {% else %}
+                                                                               Cerrar sesión
                                                                     {%endif%}                                                                              
                             </li>
                         </ul>
