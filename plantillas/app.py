@@ -105,7 +105,7 @@ def logout():
     session.pop('usuario_email', None)
     session.pop('usuario_nombre', None)
     flash('Sesion cerrada correctamente', 'info')
-    return redirect(url_for('index'))
+    return redirect(url_for('index')) 
 
 
 if __name__=='__main__':
