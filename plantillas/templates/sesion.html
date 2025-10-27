@@ -8,18 +8,18 @@
     <h1 class="text-center text-primary">Iniciar sesion</h1>
     <section class="row justify-content-center">
         <div class="col-12 col-md-6">
-            <form>
+            <form method="POST" action="/sesion">
                 <section class="row">
                     <div class=" col-12 mb-3">
-                        <label for="cuenta" class="form-label">Correo o numero de telefono </label>
-                        <input type="text" required class="form-control" id="nombre" placeholder="Correo o numero de telefono">
+                        <label for="email" class="form-label">Correo </label>
+                        <input type="email" required class="form-control" id="email" name="email" placeholder="Ingrese su correo">
                     </div>
                 </section>
 
                 <section class="row">
                     <div class="col-12 mb-3">
-                        <label for="contra" class="form-label">Contraseña </label>
-                        <input type="password" class="form-control" id="contra" placeholder="Ingrese su contaseña">
+                        <label for="password" class="form-label">Contraseña </label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Ingrese su contaseña">
                     </div>
                 </section>
 

@@ -4,9 +4,18 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'una_clave_muy_secreta_muy_larga_y_dificil_de_adivinar'
 
-@app.route('/sesion')
-def iniciar_sesion():
-    return render_template('sesion.html')
+USUARIOS_REGISTRADOS = {
+    'admin@correo.com': {
+        'password': 'Admin123',
+        'nombre': 'Administrador',
+        'fecha_nacimiento': '1990-01-01'
+    },
+    'usuario@correo.com': {
+        'password': 'Usuario123',
+        'nombre': 'Juan Pérez',
+        'fecha_nacimiento': '1995-05-15'
+    }
+}
     
 @app.route('/')
 def index():
@@ -61,6 +70,41 @@ def registrame():
 @app.route('/sesion')
 def iniciar_sesion():
     return render_template('sesion.html')
+
+@app.route('/validaSesion', methods=['GET', 'POST'])
+def validaSesion():
+    if request.method == 'POST':
+        email = request.form.get('email', '').strip()
+        password = request.form.get('password', '')
+
+        if not email or not password:
+            flash('Por favor ingresa correo y contraseña','error')
+        elif email in USUARIOS_REGISTRADOS:
+            usuario = USUARIOS_REGISTRADOS[email]
+            if usuario['password'] == password:
+                session['usuario_email'] = email
+                session['usuario_nombre'] = usuario['nombre']
+                flash(f'Bienvenido {usuario["nombre"]}!', 'success')
+                return redirect(url_for('/'))
+            else:
+                flash('Contraseña incorrecta o usuario no encontrado', 'error')
+
+    return render_template('sesion.html')
+
+@app.route('/profile')
+def profile():
+    username = session.get('username')
+    if username is not None:
+        return 'user: ' + username
+    return 'No has iniciado sesion'
+
+@app.route('/logout')
+def logout():
+    session.pop('usuario_email', None)
+    session.pop('usuario_nombre', None)
+    flash('Sesion cerrada correctamente', 'info')
+    return redirect(url_for('index'))
+
 
 if __name__=='__main__':
     app.run(debug=True)

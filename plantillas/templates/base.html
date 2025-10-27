@@ -14,6 +14,12 @@
         <header class="row pt-5 bg-success text-light">
             <div class="col-12 mt-4">
                 <h1>Desarrollo de plantillas base</h1>
+
+                {% if session.get("usuario_nombre") %}
+                    <h5 class="text-light">session.get("usuario_nombre")</h5>
+                {% else %}
+                    <h5 class="text-light">No has iniciado sesión</h5>
+                {% endif %}
             </div>
             <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
                 <div class="container-fluid">
@@ -37,16 +43,15 @@
                                 <a class="nav-link" href="/maravillas">Las Maravillas del Mundo</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="/acerca">Acerca de</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="/registro">Registrarse</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/sesion">{% if session.get("nombre")==None %} Iniciar session 
-                                    {% else %} Cerrar session {%endif%}
-                                </a>
-                                                                                    
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/acerca">Acerca de</a>
+                                <a class="nav-link" href="/sesion">{% if session.get("nombre")==None %} Iniciar sesión
+                                                                    {% else %} Cerrar sesión
+                                                                    {%endif%}                                                                              
                             </li>
                         </ul>
                     </div>
