@@ -2,18 +2,13 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = 'una_clave_muy_secreta_muy_larga_y_dificil_de_adivinar'
+app.config['SECRET_KEY'] = 'una_clave_muy_secreta_muy_larga_y_dificil_de_adivinar_okbais'
 
 USUARIOS_REGISTRADOS = {
     'admin@correo.com': {
-        'password': 'Admin123',
-        'nombre': 'Administrador',
+        'password': 'Admin#1997',
+        'nombre': 'Gregg',
         'fecha_nacimiento': '1990-01-01'
-    },
-    'usuario@correo.com': {
-        'password': 'Usuario123',
-        'nombre': 'Juan Pérez',
-        'fecha_nacimiento': '1995-05-15'
     }
 }
     
@@ -67,12 +62,14 @@ def registrame():
             return render_template('index.html')
     
 
-@app.route('/sesion')
-def iniciar_sesion():
-    return render_template('sesion.html')
+@app.route('/login')
+def login():
+    if session.get('logueado'):
+        return redirect(url_for('index'))
+    return render_template('login.html')
 
-@app.route('/validaSesion', methods=['GET', 'POST'])
-def validaSesion():
+@app.route('/validaLogin', methods=['GET', 'POST'])
+def validaLogin():
     if request.method == 'POST':
         email = request.form.get('email', '').strip()
         password = request.form.get('password', '')
@@ -83,7 +80,8 @@ def validaSesion():
             usuario = USUARIOS_REGISTRADOS[email]
             if usuario['password'] == password:
                 session['usuario_email'] = email
-                session['usuario_nombre'] = usuario['nombre']
+                session['usuario'] = usuario['nombre']
+                session['logueado'] = True
                 flash(f'Bienvenido {usuario["nombre"]}!', 'success')
                 return redirect(url_for('index'))
             else:
@@ -91,19 +89,11 @@ def validaSesion():
         else:
             flash('Usuario no encontrado', 'error')
         
-    return render_template('sesion.html')
-
-@app.route('/profile')
-def profile():
-    username = session.get('username')
-    if username is not None:
-        return 'user: ' + username
-    return 'No has iniciado sesion'
+    return render_template('login.html')
 
 @app.route('/logout')
 def logout():
-    session.pop('usuario_email', None)
-    session.pop('usuario_nombre', None)
+    session.clear()
     flash('Sesion cerrada correctamente', 'info')
     return redirect(url_for('index')) 
 
